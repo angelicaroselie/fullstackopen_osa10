@@ -4,6 +4,11 @@ import theme from '../theme';
 import { Link } from 'react-router-native'; // 10.6
 import { ScrollView } from 'react-native'; // 10.7
 
+import { useQuery, useApolloClient } from '@apollo/client'; // 10.16
+import { useNavigate } from 'react-router-native'; // 10.16
+import { ME } from '../graphql/queries'; // 10.16
+import useAuthStorage from '../hooks/useAuthStorage'; // 10.16
+
 
 const styles = StyleSheet.create({ // 10.4 - styles for the app bar
     container: {
@@ -24,26 +29,46 @@ const styles = StyleSheet.create({ // 10.4 - styles for the app bar
 
 
 
+const AppBar = () => { // 10.16 - component for the app bar
+    const { data } = useQuery(ME); // 10.16
+    const authStorage = useAuthStorage(); // 10.16
+    const apolloClient = useApolloClient(); // 10.16
+    const navigate = useNavigate(); // 10.16
 
-const AppBar = () => { // 10.4, 10.6, 10.7 - component for the app bar
+    let userLoggedIn = false;
+
+    const signOut = async () => { // 10.16
+        await authStorage.removeAccessToken(); // 10.16
+        apolloClient.resetStore(); // 10.16
+        userLoggedIn = false; // 10.16
+        navigate('/'); // 10.16
+    };
+
+    
+    userLoggedIn = !data?.me ? false : true; // 10.16
+    
+    // show the app bar with sign in if user is not logged in, otherwise show sign out button
     return (
         <View style={styles.container}>
-
             <ScrollView horizontal>
-
-                <Link to="/" component={Pressable}>
+                <Link to="/">
                     <Text style={styles.textstyle}>Repositories</Text>
                 </Link>
-
-                <Link to="/signin" component={Pressable}>
-                    <Text style={styles.textstyle}>Sign in</Text>
-                </Link>
-
+                {!userLoggedIn &&
+                    <Link to="/signin">
+                        <Text style={styles.textstyle}>Sign in</Text>
+                    </Link>
+                }
+                {userLoggedIn &&
+                    <Pressable onPress={signOut}>
+                        <Text style={styles.textstyle}>Sign out</Text>
+                    </Pressable>
+                }
             </ScrollView>
-
         </View>
-    );
+    )
 
-};
+}
+
 
 export default AppBar;

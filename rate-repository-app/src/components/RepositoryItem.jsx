@@ -29,7 +29,6 @@ const RepositoryItem = ({ item }) => { // 10.3 - component takes item as props
         return value;
     };
 
-
     
     // 10.3 - returns the item's data
     return (
@@ -54,10 +53,6 @@ const RepositoryItem = ({ item }) => { // 10.3 - component takes item as props
                 </View>
 
             </View>
-
-
-
-
 
 
 

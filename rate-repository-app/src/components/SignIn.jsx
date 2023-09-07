@@ -2,10 +2,14 @@
 
 import { Pressable, View, Text, StyleSheet } from 'react-native';
 
+import { useNavigate } from 'react-router-native'; // 10.15 - useNavigate hook for redirecting to another page
+
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 
 import * as yup from 'yup'; // 10.9 - yup validation library
+
+import useSignIn from '../hooks/useSignIn'; // 10.13 - useSignIn hook
 
 const styles = StyleSheet.create({
     signInButton: {
@@ -39,10 +43,29 @@ const validationSchema = yup.object().shape({ // 10.9 - validationSchema
 
 
 
-const SignIn = () => { // 10.8 - SignIn component
+const SignIn = () => { // 10.8, 10.13 - SignIn component
 
-    const onSubmit = (values) => { // 10.8 - onSubmit function
-        console.log(values);
+    const [signIn] = useSignIn(); // 10.13 - useSignIn hook
+
+    const navigate = useNavigate(); // 10.15 - useNavigate hook for redirecting to another page
+
+    const onSubmit = async (values) => { // 10.8, 10.13 - onSubmit function
+
+        const { username, password } = values;
+        console.log(`Username: ${username}, Password: ${password}`);
+
+        try {
+            const loginObject = { username, password }; // creating loginObject
+
+            const loginResult = await signIn(loginObject); // calling signIn function from useSignIn hook
+            console.log(loginResult); // logging result which is the token 
+            navigate('/'); // 10.15 - redirecting to repository main page after successful login
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+
     };
 
     return (
