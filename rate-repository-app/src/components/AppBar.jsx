@@ -44,9 +44,9 @@ const AppBar = () => { // 10.16 - component for the app bar
         navigate('/'); // 10.16
     };
 
-    
-    userLoggedIn = !data?.me ? false : true; // 10.16
-    
+
+    userLoggedIn = !data?.me ? false : true; // 10.16, // 10.21, 10.25
+
     // show the app bar with sign in if user is not logged in, otherwise show sign out button
     return (
         <View style={styles.container}>
@@ -55,14 +55,33 @@ const AppBar = () => { // 10.16 - component for the app bar
                     <Text style={styles.textstyle}>Repositories</Text>
                 </Link>
                 {!userLoggedIn &&
-                    <Link to="/signin">
-                        <Text style={styles.textstyle}>Sign in</Text>
-                    </Link>
+                    <>
+                        <Link to="/signin">
+                            <Text style={styles.textstyle}>Sign in</Text>
+                        </Link>
+                        <Link to="/signup">
+                            <Text style={styles.textstyle}>Sign up</Text>
+                        </Link>
+                    </>
                 }
                 {userLoggedIn &&
-                    <Pressable onPress={signOut}>
-                        <Text style={styles.textstyle}>Sign out</Text>
-                    </Pressable>
+
+                    <>
+
+                        <Link to="/review">
+                            <Text style={styles.textstyle}>Create a review</Text>
+                        </Link>
+
+                        <Link to="/myreviews">
+                            <Text style={styles.textstyle}>My reviews</Text>
+                        </Link>
+
+
+                        <Pressable onPress={signOut}>
+                            <Text style={styles.textstyle}>Sign out</Text>
+                        </Pressable>
+
+                    </>
                 }
             </ScrollView>
         </View>

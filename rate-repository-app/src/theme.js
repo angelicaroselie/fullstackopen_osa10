@@ -2,7 +2,7 @@ import { Platform } from 'react-native'; // 10.9
 
 const theme = { // 10.4 theme configuration
     colors: {
-        appBarBackground: '#FFB2D0',
+        appBarBackground: '#FFB2D0', // pink
         headerFontColor: '#FFFFFF',
     },
     fontSizes: {

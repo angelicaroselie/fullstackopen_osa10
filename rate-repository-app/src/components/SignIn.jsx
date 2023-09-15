@@ -1,5 +1,4 @@
 // 10.6 - Sign in form
-
 import { Pressable, View, Text, StyleSheet } from 'react-native';
 
 import { useNavigate } from 'react-router-native'; // 10.15 - useNavigate hook for redirecting to another page
@@ -65,22 +64,30 @@ const SignIn = () => { // 10.8, 10.13 - SignIn component
             console.log(err);
         }
 
-
     };
 
     return (
-        <Formik initialValues={{ username: '', password: '' }} onSubmit={onSubmit} validationSchema={validationSchema}>
-            {({ handleSubmit }) =>
-                <View>
-                    <FormikTextInput name="username" placeholder="Username" />
-                    <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-                    <Pressable style={styles.signInButton} onPress={handleSubmit}>
-                        <Text style={styles.signInText}>Sign in</Text>
-                    </Pressable>
-                </View>
-            }
-        </Formik>
+        <SignInContainer onSubmit={onSubmit} />
     );
 }
+
+
+
+// 10.18 - SignInContainer component
+export const SignInContainer = ({ onSubmit }) => { // 10.18 - SignInContainer component, view logic shows the form
+    return (
+            <Formik initialValues={{ username: '', password: '' }} onSubmit={onSubmit} validationSchema={validationSchema}>
+                {({ handleSubmit }) =>
+                     <View>
+                        <FormikTextInput name="username" placeholder="Username" testID="usernameField" />
+                        <FormikTextInput name="password" placeholder="Password" secureTextEntry testID="passwordField" />
+                        <Pressable style={styles.signInButton} onPress={handleSubmit} testID="submitButton">
+                            <Text style={styles.signInText}>Sign in</Text>
+                        </Pressable>
+                    </View>
+                }
+            </Formik>
+    );
+};
 
 export default SignIn;
