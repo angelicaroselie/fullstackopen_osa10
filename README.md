@@ -1,3 +1,5 @@
-# Tasks for fullstackopen course part 10 - React Native
+# Tasks for University of Helsinki Fullstackopen Course
 
-## Check out main repository fullstackopen for other parts of the course
+This repository contains tasks and assignments for the FullstackOpen course part10 (React Native) offered by the University of Helsinki.
+
+Please note that these tasks were completed in 2023. For my most recent projects and work, please check out my latest repositories.
